@@ -16,9 +16,9 @@ spec:
       containers:
         - name: keycloak-operator
           # Replace this with the built image name
-          image: REPLACE_IMAGE
+          image: quay.io/davidffrench/keycloak-operator:INTLY-3732
           command:
-          - keycloak-operator
+            - keycloak-operator
           imagePullPolicy: Always
           env:
             - name: WATCH_NAMESPACE

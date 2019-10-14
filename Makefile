@@ -20,12 +20,14 @@ cluster/prepare:
 	- oc new-project $(NAMESPACE)
 	- kubectl apply -f deploy/role.yaml -n $(NAMESPACE)
 	- kubectl apply -f deploy/role_binding.yaml -n $(NAMESPACE)
+	- kubectl apply -f deploy/cluster_role.yaml -n $(NAMESPACE)
+	- kubectl apply -f deploy/cluster_role_binding.yaml -n $(NAMESPACE)
 	- kubectl apply -f deploy/service_account.yaml -n $(NAMESPACE)
 
 .PHONY: cluster/clean
 cluster/clean:
 	# Remove all roles, rolebindings and service accounts with the name keycloak-operator
-	- kubectl get roles,rolebindings,serviceaccounts keycloak-operator -n $(NAMESPACE) --no-headers=true -o name | xargs kubectl delete -n $(NAMESPACE)
+	- kubectl get roles,rolebindings,clusterroles,clusterrolebindings,serviceaccounts keycloak-operator -n $(NAMESPACE) --no-headers=true -o name | xargs kubectl delete -n $(NAMESPACE)
 	# Remove all CRDS with keycloak.org in the name 
 	- kubectl get crd --no-headers=true -o name | awk '/keycloak.org/{print $1}' | xargs kubectl delete
 	- kubectl delete namespace $(NAMESPACE)

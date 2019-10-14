@@ -145,6 +145,11 @@ func main() {
 		os.Exit(1)
 	}
 
+	serveWebHookEndpoints()
+	if err = createWebHookResources(ctx, cfg); err != nil {
+		log.Info("Could not create web hook resources", "error", err.Error())
+	}
+
 	if err = serveCRMetrics(cfg); err != nil {
 		log.Info("Could not generate and serve custom resource metrics", "error", err.Error())
 	}

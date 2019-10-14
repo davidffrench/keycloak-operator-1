@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hostnames
+spec:
+  selector:
+    matchLabels:
+      name: keycloak-operator22
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        name: keycloak-operator22
+    spec:
+      containers:
+        - name: hostnames
+          image: k8s.gcr.io/serve_hostname
+          ports:
+            - containerPort: 9376
+              protocol: TCP

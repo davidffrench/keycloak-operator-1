@@ -1,0 +1,14 @@
+apiVersion: admissionregistration.k8s.io/v1beta1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: webhookconfig
+webhooks:
+  - clientConfig:
+      url: https://test-webhook-keycloak.192.168.64.5.nip.io/always-deny
+    failurePolicy: Fail
+    name: my-webhook.example.com
+    rules:
+      - operations: ["CREATE", "UPDATE", "DELETE"]
+        apiGroups: ["apps"]
+        apiVersions: ["v1"]
+        resources: ["deployments"]

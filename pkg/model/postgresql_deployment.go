@@ -9,15 +9,19 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 )
 
+var (
+	PostgresqlDeploymentLabels = map[string]string{
+		"application": ApplicationName,
+		"component":   PostgresqlDeploymentComponent,
+	}
+)
+
 func PostgresqlDeployment(cr *v1alpha1.Keycloak) *v13.Deployment {
 	return &v13.Deployment{
 		ObjectMeta: v12.ObjectMeta{
 			Name:      PostgresqlDeploymentName,
 			Namespace: cr.Namespace,
-			Labels: map[string]string{
-				"application": ApplicationName,
-				"component":   PostgresqlDeploymentComponent,
-			},
+			Labels:    PostgresqlDeploymentLabels,
 		},
 		Spec: v13.DeploymentSpec{
 			Selector: &v12.LabelSelector{
